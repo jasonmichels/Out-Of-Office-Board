@@ -15,6 +15,6 @@ return array(
 
 	'debug' => true,
 
-    'url' => 'http://outofoffice.local',
+    'url' => 'http://ooo.local',
 
 );
