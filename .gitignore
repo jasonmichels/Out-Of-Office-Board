@@ -11,6 +11,7 @@ _ide_helper.php
 /workbench
 build.properties
 /public/.htaccess
+/public/components
 .vagrant
 /uploads/*
 /phpmetrics

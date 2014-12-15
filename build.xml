@@ -252,7 +252,7 @@
         <phingcall target="build:htaccess" />
         <phingcall target="build:config" />
         <phingcall target="composer:install" />
-        <!--<phingcall target="bower:install" />-->
+        <phingcall target="bower:install" />
         <phingcall target="storage:set-permissions" />
         <phingcall target="migrate" />
         <phingcall target="db:seed" />
