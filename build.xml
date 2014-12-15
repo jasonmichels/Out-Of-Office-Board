@@ -99,7 +99,7 @@
                defaultValue="localhost" promptChar="?">Database Host
         </input>
         <input propertyName="config.config_database_name"
-               defaultValue="content_tools" promptChar="?">Database Name
+               defaultValue="out_of_office" promptChar="?">Database Name
         </input>
         <input propertyName="config.config_username"
                defaultValue="homestead" promptChar="?">Database Username
@@ -179,7 +179,7 @@
     </target>
 
     <target name="phpmetrics:generate" >
-        <exec passthru="true" checkreturn="true" command="vendor/bin/phpmetrics --report-html=phpmetrics/choice.html app/ContentTools/
+        <exec passthru="true" checkreturn="true" command="vendor/bin/phpmetrics --report-html=phpmetrics/choice.html app/OutOfOffice/
 " />
     </target>
 
