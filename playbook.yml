@@ -1,0 +1,12 @@
+---
+- hosts: all
+  sudo: true
+  vars:
+    doc_root: /vagrant/public
+    server_name: "{{ ansible_eth1.ipv4.address }}"
+    application_env: "local"
+    sys_packages: [ 'curl', 'vim', 'git']
+    php_packages: [ 'php5-curl', 'php5-cli', 'php5-mcrypt' ]
+  roles:
+    - init
+    - nginxphp
