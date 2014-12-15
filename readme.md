@@ -1,6 +1,23 @@
 ## Out Of Office Board
 
-To install fun following commands
-1.) cp build.properties-dist build.properties
-2.) Edit the build.properties file to set env
-3.) phing install
+### Installation
+```sh
+$ phing install
+```
+- Be Awesome!
+
+### Tech
+
+Out Of Office board will use some awesome stuff!
+
+* [PHP] - Because we can!
+* [Laravel] - as our middleware framework
+* [Twitter Bootstrap] - great UI boilerplate for modern web apps
+* [Go] - To power the backend API's
+* [jQuery] - duh
+* [MySQL] - you know what to do
+
+License
+----
+
+Jason Michels' owns this shit
