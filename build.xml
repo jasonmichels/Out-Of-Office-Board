@@ -183,13 +183,6 @@
 " />
     </target>
 
-    <!--Build the ide helper for laravel-->
-    <target name="build:ide-helper">
-        <phingcall target="clear:compiled" />
-        <exec passthru="true" checkreturn="true" command="php artisan ide-helper:generate --env=${project.application-environment}" />
-        <phingcall target="artisan:optimize" />
-    </target>
-
     <!-- Set permission of storage folder -->
     <target name="storage:set-permissions" >
         <exec command="chmod -R a+rwX ${dir.cache}"/>
@@ -212,7 +205,6 @@
         <delete file="${dir.base}/.env.${project.application-environment}.php" />
         <phingcall target="htaccess:uninstall" />
         <phingcall target="build.properties:uninstall" />
-        <delete file="${dir.base}/_ide_helper.php" verbose="true" />
     </target>
 
     <!-- Internal target to get the correct composer bin file to use
