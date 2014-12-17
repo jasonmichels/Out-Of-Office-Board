@@ -18,6 +18,8 @@ class UserServiceProvider extends ServiceProvider
         View::addNamespace('user', __DIR__ . '/../Views');
 
 		App::bind('OutOfOffice\User\Interfaces\UserRepositoryInterface', 'OutOfOffice\User\Repositories\UserRepository');
+        App::bind('OutOfOffice\User\Contracts\UserWasCreatedEvent', 'OutOfOffice\User\Events\UserWasCreatedEvent');
+        App::bind('OutOfOffice\User\Contracts\UserFactory', 'OutOfOffice\User\Factory\UserFactory');
 	}
 
 }

@@ -97,6 +97,7 @@ class AccountController extends \BaseController
     public function store()
     {
         $this->execute(RegisterUserCommand::class);
+        dd('If we get here its done');
 //        $validator = $this->users->isValid(Input::all());
 //
 //        if ($validator->fails()) {

@@ -2,10 +2,20 @@
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use Laracasts\Commander\Events\EventGenerator;
 
+/**
+ * Class User
+ *
+ * @package OutOfOffice\User
+ * @author Jason Michels <jason@jasonmichels.com>
+ * @version $Id$
+ */
 class User extends \Eloquent implements UserInterface, RemindableInterface
 {
-    protected $fillable = array('email', 'password', 'name', 'active', 'is_admin');
+    use EventGenerator;
+
+    protected $fillable = array('email', 'password', 'name', 'domain', 'domain_owner', 'active', 'is_admin');
 
 	/**
 	 * The database table used by the model.

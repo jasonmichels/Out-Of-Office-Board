@@ -8,7 +8,7 @@ use Laracasts\Validation\FormValidator;
  * @author Jason Michels <jason@jasonmichels.com>
  * @version $Id$
  */
-class RegisterUserForm
+class RegisterUserForm extends FormValidator
 {
     /**
      * Validation rules for registering a new user

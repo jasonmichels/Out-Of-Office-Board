@@ -51,6 +51,17 @@ App::error(function(Exception $exception, $code)
 	Log::error($exception);
 });
 
+/**
+ * This catches any laracasts form validation failure
+ */
+App::error(function(\Laracasts\Validation\FormValidationException $exception, $code)
+{
+    Log::error('FormValidationException was caught');
+    Log::error($exception);
+
+    return Redirect::back()->withInput()->withErrors($exception->getErrors());
+});
+
 /*
 |--------------------------------------------------------------------------
 | Maintenance Mode Handler
