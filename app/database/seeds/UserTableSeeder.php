@@ -15,7 +15,6 @@ class UserTableSeeder extends Seeder
                     'name' => 'Jason MichelsAdmin',
                     'domain' => 'oooboard.com',
                     'domain_owner' => 1,
-                    'email_is_confirmed' => 1,
                     'active' => 1,
                     'is_admin' => 1
                 )

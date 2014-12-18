@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use OutOfOffice\User\Exceptions\InvalidLoginException;
 
 /**
+ * Handler to authenticate a user
+ *
  * Class LoginUserCommandHandler
  *
  * @package OutOfOffice\User\Handlers
@@ -30,6 +32,7 @@ class LoginUserCommandHandler implements CommandHandler
             array(
                 'email' => $command->email,
                 'password' => $command->password,
+                'active' => 1
             ),
             true
         ))

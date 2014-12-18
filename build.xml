@@ -13,6 +13,7 @@
 
     <property name="dir.base" value="${project.basedir}" />
     <property name="dir.app" value="${project.basedir}/app"/>
+    <property name="dir.outOfOffice" value="${dir.app}/OutOfOffice"/>
     <property name="dir.public" value="${project.basedir}/public"/>
     <property name="dir.storage" value="${dir.app}/storage"/>
     <property name="dir.cache" value="${dir.storage}/cache" />
@@ -21,8 +22,54 @@
     <property name="dir.sessions" value="${dir.storage}/sessions" />
     <property name="dir.views" value="${dir.storage}/views" />
     <property name="dir.uploads" value="${project.basedir}/uploads" />
+    <property name="dir.build" value="${project.basedir}/build"/>
+    <property name="dir.docs" value="${dir.build}/docs"/>
+    <property name="dir.docs.phpdoc" value="${dir.docs}/phpdoc"/>
+    <property name="dir.reports" value="${dir.build}/logs"/>
+    <property name="dir.reports.phpmetric" value="${dir.reports}/phpmetrics"/>
     <property name="dir.vendor" value="${project.basedir}/vendor" />
     <property name="bin.composer.failMessage" value="Could not find composer. Please make a composer.phar executable available either in path or project root. See: http://getcomposer.org/download/ for details."/>
+
+    <!-- Filesets -->
+    <fileset id="sourcecode" dir="${dir.outOfOffice}">
+        <include name="**/*.php"/>
+    </fileset>
+
+    <!-- Default target -->
+    <target name="main">
+        <echo msg="See:"/>
+        <echo msg=" * phing -l"/>
+    </target>
+
+    <!--******************************************************************************************-->
+
+    <!-- Composite targets -->
+    <target name="install" description="Install the entire project">
+        <phingcall target="folders:create" />
+        <phingcall target="build:htaccess" />
+        <phingcall target="build:config" />
+        <phingcall target="composer:install" />
+        <phingcall target="bower:install" />
+        <phingcall target="storage:set-permissions" />
+        <phingcall target="migrate" />
+        <phingcall target="db:seed" />
+    </target>
+
+    <target name="uninstall" description="Uninstall the entire project">
+        <phingcall target="build:clean" />
+        <phingcall target="migrate:reset" />
+    </target>
+
+    <!--
+       Check Target
+       Runs all quality check sub-targets
+   -->
+    <target name="check" description="Runs all quality check sub-targets" >
+        <phingcall target="check:phpmetrics" />
+        <phingcall target="check:cs" />
+    </target>
+
+    <!--******************************************************************************************-->
 
     <!-- Create .htaccess files -->
     <target name="build:htaccess">
@@ -178,9 +225,30 @@
         <exec passthru="true" checkreturn="true" command="${bin.composer} dump-autoload --optimize" />
     </target>
 
-    <target name="phpmetrics:generate" >
-        <exec passthru="true" checkreturn="true" command="vendor/bin/phpmetrics --report-html=phpmetrics/choice.html app/OutOfOffice/
+    <!-- PHP Metrics -->
+    <target name="check:phpmetrics" >
+        <exec passthru="true" checkreturn="true" command="vendor/bin/phpmetrics --report-html=${dir.reports.phpmetric}/choice.html ${dir.outOfOffice}
 " />
+    </target>
+
+    <!-- PSR2 Codesniffer -->
+    <target name="check:cs">
+        <echo msg="Checking coding standard ..."/>
+        <phpcodesniffer standard="PSR2" showSniffs="true" showWarnings="true">
+            <fileset refid="sourcecode"/>
+            <formatter type="checkstyle" outfile="${dir.reports}/checkstyle.xml"/>
+            <formatter type="full" outfile="${dir.reports}/checkstyle.txt"/>
+        </phpcodesniffer>
+    </target>
+
+    <!-- copy/paste detector -->
+    <target name="check:cpd">
+        <echo msg="Checking similar code blocks ..."/>
+        <phpcpd>
+            <fileset refid="sourcecode"/>
+            <formatter type="pmd" outfile="${dir.reports}/pmd-cpd.xml"/>
+            <formatter type="default" outfile="${dir.reports}/cpd.txt"/>
+        </phpcpd>
     </target>
 
     <!-- Set permission of storage folder -->
@@ -195,6 +263,11 @@
     <!--Create Upload folder-->
     <target name="folders:create">
         <mkdir dir="${dir.uploads}" />
+        <mkdir dir="${dir.build}" />
+        <mkdir dir="${dir.docs}" />
+        <mkdir dir="${dir.docs.phpdoc}" />
+        <mkdir dir="${dir.reports}" />
+        <mkdir dir="${dir.reports.phpmetric}" />
     </target>
 
     <!--Clean the necessary files-->
@@ -202,6 +275,7 @@
         <echo msg="Cleaning build directories ..."/>
         <delete dir="${dir.vendor}" verbose="true"/>
         <delete dir="${dir.uploads}" verbose="true"/>
+        <delete dir="${dir.build}" verbose="true" />
         <delete file="${dir.base}/.env.${project.application-environment}.php" />
         <phingcall target="htaccess:uninstall" />
         <phingcall target="build.properties:uninstall" />
@@ -231,28 +305,6 @@
             </else>
         </if>
         <echo msg="Using composer at '${bin.composer}'"/>
-    </target>
-
-
-
-
-    <!--******************************************************************************************-->
-
-    <!-- Composite targets -->
-    <target name="install" description="Install the entire project">
-        <phingcall target="folders:create" />
-        <phingcall target="build:htaccess" />
-        <phingcall target="build:config" />
-        <phingcall target="composer:install" />
-        <phingcall target="bower:install" />
-        <phingcall target="storage:set-permissions" />
-        <phingcall target="migrate" />
-        <phingcall target="db:seed" />
-    </target>
-
-    <target name="uninstall" description="Uninstall the entire project">
-        <phingcall target="build:clean" />
-        <phingcall target="migrate:reset" />
     </target>
 
 </project>

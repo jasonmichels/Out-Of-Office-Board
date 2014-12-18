@@ -70,15 +70,14 @@ class RegisterUserCommandHandler implements CommandHandler
             // if paid in full (active) then create new account
             // they are not domain owner so create them as not domain owner
             // @TODO Send email confirmation from the event that is triggered
-            $user = $this->userFactory->create(array_merge($command->toArray(), ['domain' => $domain, 'domain_owner' => false, 'email_is_confirmed' => false, 'active' => true]));
-
+            $user = $this->userFactory->create(array_merge($command->toArray(), ['domain' => $domain, 'domain_owner' => false, 'active' => false]));
+        } else {
+            // if no domainOwner, they are first of their kind
+            // Create the new user and make them confirm their account.
+            // @TODO Also make them pay me my money
+            // @TODO Send email confirmation from the event that is triggered
+            $user = $this->userFactory->create(array_merge($command->toArray(), ['domain' => $domain, 'domain_owner' => true, 'active' => false]));
         }
-
-        // if no domainOwner, they are first of their kind
-        // Create the new user and make them confirm their account.
-        // @TODO Also make them pay me my money
-        // @TODO Send email confirmation from the event that is triggered
-        $user = $this->userFactory->create(array_merge($command->toArray(), ['domain' => $domain, 'domain_owner' => true, 'email_is_confirmed' => false, 'active' => true]));
 
         $this->dispatchEventsFor($user);
         return $user;

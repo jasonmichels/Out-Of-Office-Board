@@ -14,10 +14,11 @@ use OutOfOffice\User\Handlers\RegisterUserCommand;
 use OutOfOffice\User\Handlers\LoginUserCommand;
 
 /**
+ * Class AccountController
+ *
  * Manager user login/authentication
  *
- * Class AccountController
- * @package Controllers
+ * @package OutOfOffice\User\Controllers
  * @author Jason Michels <jason@jasonmichels.com>
  * @version $Id$
  */
@@ -27,7 +28,7 @@ class AccountController extends \BaseController
      * Get method to show login form
      *
      * @return mixed
-     * @todo Add Facebook login ability????
+     * @TODO Add Facebook login ability????
      */
     public function login()
     {

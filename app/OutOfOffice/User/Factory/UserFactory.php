@@ -52,7 +52,7 @@ class UserFactory implements \OutOfOffice\User\Contracts\UserFactory
         $this->user->name = $userData['name'];
         $this->user->domain = $userData['domain'];
         $this->user->domain_owner = $userData['domain_owner'];
-        $this->user->email_is_confirmed = $userData['email_is_confirmed'];
+        $this->user->confirmation_code = $userData['confirmation_code'];
         $this->user->active = $userData['active'];
 
         $this->user->save();

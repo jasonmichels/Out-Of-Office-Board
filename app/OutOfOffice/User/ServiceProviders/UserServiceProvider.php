@@ -2,9 +2,16 @@
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class UserServiceProvider
+ *
+ * @package OutOfOffice\User\ServiceProviders
+ * @author Jason Michels <jason@jasonmichels.com>
+ * @version $Id$
+ */
 class UserServiceProvider extends ServiceProvider
 {
 	/**
@@ -21,6 +28,16 @@ class UserServiceProvider extends ServiceProvider
         App::bind('OutOfOffice\User\Contracts\UserWasCreatedEvent', 'OutOfOffice\User\Events\UserWasCreatedEvent');
         App::bind('OutOfOffice\User\Contracts\UserFactory', 'OutOfOffice\User\Factory\UserFactory');
         App::bind('OutOfOffice\User\Contracts\DomainValidator', 'OutOfOffice\User\Services\ArrayDomainValidator');
+
+        $this->registerEventListeners();
 	}
+
+    /**
+     * Register any necessary user event listeners
+     */
+    public function registerEventListeners()
+    {
+        Event::listen('OutOfOffice.User.*', 'OutOfOffice\User\Listeners\EmailConfirmation');
+    }
 
 }
