@@ -11,8 +11,6 @@ Route::post('signup', array('uses' => 'OutOfOffice\User\Controllers\AccountContr
 
 Route::controller('password', 'OutOfOffice\User\Controllers\RemindersController');
 
-Route::get('user/{id}', array('uses' => 'OutOfOffice\User\Controllers\ManageController@show', 'as' => 'user.manage.show'))->where('id', '[0-9]+');
-
 Route::group(array('before' => 'auth|isAdmin'), function()
 {
     Route::get('user', array('uses' => 'OutOfOffice\User\Controllers\ManageController@index', 'as' => 'user.manage.index'));
@@ -24,6 +22,7 @@ Route::group(array('before' => 'auth|isAdmin'), function()
 
 Route::group(array('before' => 'auth'), function()
 {
+    Route::get('user/{id}', array('uses' => 'OutOfOffice\User\Controllers\ManageController@show', 'as' => 'user.manage.show'))->where('id', '[0-9]+');
     Route::get('user/{id}/edit', array('uses' => 'OutOfOffice\User\Controllers\ManageController@edit', 'as' => 'user.manage.edit'))->where('id', '[0-9]+');
     Route::put('user/{id}', array('uses' => 'OutOfOffice\User\Controllers\ManageController@update', 'as' => 'user.manage.update', 'before' => 'csrf'))->where('id', '[0-9]+');
 });

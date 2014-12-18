@@ -6,13 +6,12 @@
  * @package Controllers
  */
 
-use OutOfOffice\User\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Input;
 use Laracasts\Flash\Flash;
 use OutOfOffice\User\Handlers\RegisterUserCommand;
+use OutOfOffice\User\Handlers\LoginUserCommand;
 
 /**
  * Manager user login/authentication
@@ -24,17 +23,6 @@ use OutOfOffice\User\Handlers\RegisterUserCommand;
  */
 class AccountController extends \BaseController
 {
-
-    /**
-     * Dependency inject user repository
-     *
-     * @param UserRepositoryInterface $users
-     */
-    public function __construct(UserRepositoryInterface $users)
-    {
-        $this->users = $users;
-    }
-
     /**
      * Get method to show login form
      *
@@ -53,19 +41,8 @@ class AccountController extends \BaseController
      */
     public function auth()
     {
-        if (Auth::attempt(
-            array(
-                'email' => Input::get('email'),
-                'password' => Input::get('password'),
-            ),
-            true
-        ))
-        {
-            return Redirect::route('status.manage.index');
-        } else {
-            Input::flash();
-            return Redirect::to('/login')->withInput()->with('login_errors', true);
-        }
+        $this->execute(LoginUserCommand::class);
+        return Redirect::route('status.manage.index');
     }
 
     /**

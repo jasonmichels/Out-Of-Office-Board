@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
+use Laracasts\Flash\Flash;
 
 /**
  * Class RemindersController
@@ -35,11 +36,11 @@ class RemindersController extends \BaseController {
 		switch ($response = Password::remind(Input::only('email')))
 		{
 			case Password::INVALID_USER:
-                Session::flash('flash_message', array('message' => Lang::get($response), 'alert' => 'danger', 'callout' => 'Error!'));
+                Flash::error(Lang::get($response));
 				return Redirect::back()->with('error', Lang::get($response));
 
 			case Password::REMINDER_SENT:
-                Session::flash('flash_message', array('message' => Lang::get($response), 'alert' => 'success', 'callout' => 'Success!'));
+                Flash::success(Lang::get($response));
 				return Redirect::back()->with('status', Lang::get($response));
 		}
 	}
@@ -80,11 +81,11 @@ class RemindersController extends \BaseController {
 			case Password::INVALID_PASSWORD:
 			case Password::INVALID_TOKEN:
 			case Password::INVALID_USER:
-                Session::flash('flash_message', array('message' => Lang::get($response), 'alert' => 'danger', 'callout' => 'Error!'));
+                Flash::error(Lang::get($response));
 				return Redirect::back()->with('error', Lang::get($response));
 
 			case Password::PASSWORD_RESET:
-                Session::flash('flash_message', array('message' => 'Your password has been reset. Please login again', 'alert' => 'success', 'callout' => 'Reset Password!'));
+                Flash::success('Your password has been reset. Please login again');
 				return Redirect::to('/');
 		}
 	}

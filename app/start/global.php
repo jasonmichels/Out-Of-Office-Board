@@ -52,6 +52,18 @@ App::error(function(Exception $exception, $code)
 });
 
 /**
+ * Catch validation when the login fails
+ */
+App::error(function(\OutOfOffice\User\Exceptions\InvalidLoginException $exception, $code)
+{
+    Log::error('InvalidLoginException was caught');
+    Log::error($exception);
+
+    \Laracasts\Flash\Flash::error($exception->getMessage());
+    return Redirect::back()->withInput(Input::except('password'));
+});
+
+/**
  * This catches any laracasts form validation failure
  */
 App::error(function(\Laracasts\Validation\FormValidationException $exception, $code)

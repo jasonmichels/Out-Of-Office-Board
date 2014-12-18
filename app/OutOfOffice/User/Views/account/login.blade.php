@@ -10,24 +10,20 @@
 
 <div class="row">
     <div class="col-md-6">
-        @if (Session::has('login_errors'))
-            <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong>Warning!</strong> Email or Password incorrect.
-            </div>
-        @endif
 
         <form role="form" class="" method="POST" action="{{ route('user.account.auth') }}" accept-charset="UTF-8">
 
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-            <div class="form-group {{ Session::has('login_errors') ? 'has-error' : '' }}">
+            <div class="form-group {{ ($errors->first('email')) ? 'has-error' : '' }}">
                 <label class="control-label" for="email">Email</label>
+                {{ ($errors->first('email')) ? '<p class="text-danger">' . $errors->first('email') . '</p>' : '' }}
                 <input name="email" type="email" class="form-control" id="email" placeholder="Enter Email Address" value="{{ Input::old('email') }}">
             </div>
 
-            <div class="form-group {{ Session::has('login_errors') ? 'has-error' : '' }}">
+            <div class="form-group {{ ($errors->first('password')) ? 'has-error' : '' }}">
                 <label class="control-label" for="password">Password</label>
+                {{ ($errors->first('password')) ? '<p class="text-danger">' . $errors->first('password') . '</p>' : '' }}
                 <input name="password" type="password" class="form-control" id="password" placeholder="Password">
             </div>
 
