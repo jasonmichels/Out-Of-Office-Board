@@ -42,7 +42,7 @@
 
     <!-- Begin page content -->
     <div class="container">
-        @include('flash.message')
+        @include('flash::message')
         @yield('content')
     </div>
 
@@ -64,6 +64,10 @@
 <script src="{{ asset('components/pickadate/lib/compressed/picker.js') }}"></script>
 <script src="{{ asset('components/pickadate/lib/compressed/picker.date.js') }}"></script>
 <script src="{{ asset('components/pickadate/lib/compressed/legacy.js') }}"></script>
+
+<script>
+    $('#flash-overlay-modal').modal();
+</script>
 
 </body>
 </html>

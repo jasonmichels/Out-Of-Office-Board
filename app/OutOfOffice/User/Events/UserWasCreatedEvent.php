@@ -1,7 +1,7 @@
 <?php namespace OutOfOffice\User\Events;
 
 /**
- * Class UserWasCreated
+ * Class UserWasCreatedEvent
  *
  * User was created event
  *
@@ -9,7 +9,7 @@
  * @author Jason Michels <jason@jasonmichels.com>
  * @version $Id$
  */
-class UserWasCreated
+class UserWasCreatedEvent implements \OutOfOffice\User\Contracts\UserWasCreatedEvent
 {
 
     /**
@@ -31,7 +31,7 @@ class UserWasCreated
 
     /**
      * @param $userId
-     * @return UserWasCreated
+     * @return UserWasCreatedEvent
      */
     public function setUserId($userId)
     {

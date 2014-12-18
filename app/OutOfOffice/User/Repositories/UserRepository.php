@@ -21,6 +21,17 @@ use OutOfOffice\User\User;
  */
 class UserRepository implements UserRepositoryInterface
 {
+    /**
+     * Get the domain owner for a domain
+     *
+     * @param $domain
+     *
+     * @return mixed
+     */
+    public function getDomainOwnerForDomain($domain)
+    {
+        return User::where('domain', $domain)->where('domain_owner', 1)->first();
+    }
 
     /**
      * Get validation rules

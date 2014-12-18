@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration {
             $table->string("name", 255);
             $table->string("domain", 255);
             $table->boolean("domain_owner")->default(0);
+            $table->boolean("email_is_confirmed")->default(0);
             $table->string('remember_token', 255)->nullable();
             $table->boolean("active")->default(1);
             $table->binary("profile")->nullable();

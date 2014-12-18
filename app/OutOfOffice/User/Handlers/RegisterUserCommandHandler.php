@@ -2,7 +2,9 @@
 
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
+use OutOfOffice\User\Contracts\DomainValidator;
 use OutOfOffice\User\Contracts\UserFactory;
+use OutOfOffice\User\Interfaces\UserRepositoryInterface;
 use OutOfOffice\User\User;
 
 /**
@@ -22,43 +24,64 @@ class RegisterUserCommandHandler implements CommandHandler
     private $userFactory;
 
     /**
-     * @param UserFactory $userFactory
+     * @var DomainValidator
      */
-    public function __construct(UserFactory $userFactory)
+    private $domainValidator;
+
+    /**
+     * @var UserRepositoryInterface
+     */
+    private $userRepository;
+
+    /**
+     * @param UserFactory             $userFactory
+     * @param DomainValidator         $domainValidator
+     * @param UserRepositoryInterface $userRepository
+     */
+    public function __construct(UserFactory $userFactory, DomainValidator $domainValidator, UserRepositoryInterface $userRepository)
     {
         $this->userFactory = $userFactory;
+        $this->domainValidator = $domainValidator;
+        $this->userRepository = $userRepository;
     }
 
     /**
-     * Handle the command & register user
+     * Handle creating a new user
      *
      * @param $command
-     * @return mixed
+     *
+     * @return mixed|User
+     * @throws \Exception
      */
     public function handle($command)
     {
-        $emailExploded = explode('@', $command->email);
-        $domain = array_pop($emailExploded);
+        $domain = $this->domainValidator->parseDomainFromEmail($command->email);
 
-        //check to see if domain exists in the database or is part of our generic list
-        $user = User::where('domain', $domain)->where('domain_owner', 1)->first();
+        $this->domainValidator->validateDomainIsAllowed($domain);
 
-        if ($user) {
+        //check to see if domain owner exists in the database
+        $domainOwner = $this->userRepository->getDomainOwnerForDomain($domain);
+
+        if ($domainOwner) {
             // domain exists, make sure account is paid in full
-            if (!$user->active) {
+            if (!$domainOwner->active) {
                 throw new \Exception('Account is not active. You can re-active the account somehow??');
             }
             // if paid in full (active) then create new account
-            // they are not domain owner
-//            $this->userFactory->create($command->toArray());
+            // they are not domain owner so create them as not domain owner
+            // @TODO Send email confirmation from the event that is triggered
+            $user = $this->userFactory->create(array_merge($command->toArray(), ['domain' => $domain, 'domain_owner' => false, 'email_is_confirmed' => false, 'active' => true]));
 
-            // redirect to email confirmation page
-        } else {
-            // if there is not a user, check to make sure that they are allowed
         }
 
-        dd($user);
+        // if no domainOwner, they are first of their kind
+        // Create the new user and make them confirm their account.
+        // @TODO Also make them pay me my money
+        // @TODO Send email confirmation from the event that is triggered
+        $user = $this->userFactory->create(array_merge($command->toArray(), ['domain' => $domain, 'domain_owner' => true, 'email_is_confirmed' => false, 'active' => true]));
 
+        $this->dispatchEventsFor($user);
+        return $user;
     }
 
 } 

@@ -10,11 +10,12 @@ class UserTableSeeder extends Seeder
         DB::table('users')->insert(
             array(
                 array(
-                    'email' => 'michelsja@icloud.com',
+                    'email' => 'jason@bikefree.tv',
                     'password' => Hash::make('admin'),
                     'name' => 'Jason MichelsAdmin',
                     'domain' => 'oooboard.com',
                     'domain_owner' => 1,
+                    'email_is_confirmed' => 1,
                     'active' => 1,
                     'is_admin' => 1
                 )

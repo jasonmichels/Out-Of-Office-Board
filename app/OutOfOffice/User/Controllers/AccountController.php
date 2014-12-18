@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Session;
+use Laracasts\Flash\Flash;
 use OutOfOffice\User\Handlers\RegisterUserCommand;
 
 /**
@@ -96,19 +96,10 @@ class AccountController extends \BaseController
      */
     public function store()
     {
-        $this->execute(RegisterUserCommand::class);
-        dd('If we get here its done');
-//        $validator = $this->users->isValid(Input::all());
-//
-//        if ($validator->fails()) {
-//            return Redirect::route('user.account.signup')->withErrors($validator)->withInput(Input::except('password'));
-//        }
-//
-//        $user = $this->users->createUser(Input::all());
-//        Auth::login($user);
-//
-//        Session::flash('flash_message', array('message' => 'Successfully signed up for Out Of Office Board', 'alert' => 'success', 'callout' => 'Thanks!'));
-//        return Redirect::route('status.manage.index');
+        $user = $this->execute(RegisterUserCommand::class);
+        Auth::login($user);
+        Flash::success('Thank you for registering.  Be on the look out for an email confirmation');
+        return Redirect::route('status.manage.index');
     }
 
 }

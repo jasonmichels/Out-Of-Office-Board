@@ -59,7 +59,7 @@ App::error(function(\Laracasts\Validation\FormValidationException $exception, $c
     Log::error('FormValidationException was caught');
     Log::error($exception);
 
-    return Redirect::back()->withInput()->withErrors($exception->getErrors());
+    return Redirect::back()->withInput(Input::except('password'))->withErrors($exception->getErrors());
 });
 
 /*

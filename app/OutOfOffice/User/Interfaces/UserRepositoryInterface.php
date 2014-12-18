@@ -14,6 +14,15 @@
 interface UserRepositoryInterface
 {
     /**
+     * Get the domain owner for a domain
+     *
+     * @param $domain
+     *
+     * @return mixed
+     */
+    public function getDomainOwnerForDomain($domain);
+
+    /**
      * Get paginated users list
      *
      * @param int $number

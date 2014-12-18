@@ -20,6 +20,7 @@ class UserServiceProvider extends ServiceProvider
 		App::bind('OutOfOffice\User\Interfaces\UserRepositoryInterface', 'OutOfOffice\User\Repositories\UserRepository');
         App::bind('OutOfOffice\User\Contracts\UserWasCreatedEvent', 'OutOfOffice\User\Events\UserWasCreatedEvent');
         App::bind('OutOfOffice\User\Contracts\UserFactory', 'OutOfOffice\User\Factory\UserFactory');
+        App::bind('OutOfOffice\User\Contracts\DomainValidator', 'OutOfOffice\User\Services\ArrayDomainValidator');
 	}
 
 }

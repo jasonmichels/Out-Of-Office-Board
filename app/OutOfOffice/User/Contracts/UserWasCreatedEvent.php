@@ -16,7 +16,7 @@ interface UserWasCreatedEvent
 
     /**
      * @param $userId
-     * @return \OutOfOffice\User\Events\UserWasCreated
+     * @return \OutOfOffice\User\Events\UserWasCreatedEvent
      */
     public function setUserId($userId);
 } 

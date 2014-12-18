@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Auth;
  * @package Controllers
  * @author Jason Michels <jason@jasonmichels.com>
  * @version $Id$
+ *
+ * @TODO This entire controller needs re-written with laracasts commander
  */
 class ManageController extends \BaseController
 {
