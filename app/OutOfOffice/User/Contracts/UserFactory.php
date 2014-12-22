@@ -13,10 +13,12 @@ interface UserFactory
 {
 
     /**
-     * Create a new user
+     * Create a user new
      *
-     * @param array $userData
+     * @param $domain
+     * @param $command
      * @return User
+     * @throws \Exception
      */
-    public function create(array $userData);
+    public function createUser($domain, $command);
 } 

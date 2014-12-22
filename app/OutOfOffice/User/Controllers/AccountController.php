@@ -75,9 +75,13 @@ class AccountController extends \BaseController
     public function store()
     {
         $user = $this->execute(RegisterUserCommand::class);
-        Auth::login($user);
-        Flash::success('Thank you for registering.  Be on the look out for an email confirmation');
-        return Redirect::route('status.manage.index');
+        Flash::success('Be on the look out for an email confirmation. You will be able to login once you confirm your email address.');
+        return Redirect::route('user.account.login');
+    }
+
+    public function confirm()
+    {
+
     }
 
 }
