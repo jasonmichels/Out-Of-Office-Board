@@ -1,5 +1,8 @@
 <?php namespace OutOfOffice\User\Events;
 
+use OutOfOffice\User\Interfaces\UserRepositoryInterface;
+use OutOfOffice\User\User;
+
 /**
  * Class UserWasCreatedEvent
  *
@@ -16,6 +19,24 @@ class UserWasCreatedEvent implements \OutOfOffice\User\Contracts\UserWasCreatedE
      * @var int $userId
      */
     private $userId;
+
+    /**
+     * @var User
+     */
+    private $user;
+
+    /**
+     * @var UserRepositoryInterface
+     */
+    private $userRepository;
+
+    /**
+     * @param UserRepositoryInterface $userRepository
+     */
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
 
     /**
      * @return mixed
@@ -37,6 +58,20 @@ class UserWasCreatedEvent implements \OutOfOffice\User\Contracts\UserWasCreatedE
     {
         $this->userId = $userId;
         return $this;
+    }
+
+    /**
+     * Get a user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        if (!$this->user) {
+            $this->user = $this->userRepository->findOrFail($this->getUserId());
+        }
+
+        return $this->user;
     }
 
 

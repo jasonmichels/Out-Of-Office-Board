@@ -52,6 +52,8 @@ class RegisterUserCommandHandler implements CommandHandler
      *
      * @return mixed|User
      * @throws \Exception
+     *
+     * @TODO Add the domain as part of the command to move it out of the handler
      */
     public function handle($command)
     {

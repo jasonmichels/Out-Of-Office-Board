@@ -1,5 +1,7 @@
 <?php namespace OutOfOffice\User\Contracts;
 
+use OutOfOffice\User\User;
+
 /**
  * Interface UserWasCreatedEvent
  * @package OutOfOffice\User\Contracts
@@ -19,4 +21,11 @@ interface UserWasCreatedEvent
      * @return \OutOfOffice\User\Events\UserWasCreatedEvent
      */
     public function setUserId($userId);
+
+    /**
+     * Get a user
+     *
+     * @return User
+     */
+    public function getUser();
 } 

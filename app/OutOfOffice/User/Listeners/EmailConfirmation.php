@@ -16,29 +16,19 @@ use Illuminate\Support\Facades\Mail;
 class EmailConfirmation extends EventListener
 {
     /**
+     * Send an email confirmation to a user after they were created
+     *
      * @param UserWasCreatedEvent $userWasCreated
      */
     public function whenUserWasCreatedEvent(UserWasCreatedEvent $userWasCreated)
     {
-//        Mail::send('user::emails.confirmation', $confirmation_code, function($message) {
-//            $message->to(Input::get('email'), Input::get('username'))
-//                ->subject('Verify your email address');
-//        });
-//
-//
-//
-//
-//        Mail::queue('user::emails.signup', array('user' => $userArray), function($message) use ($userArray)
-//        {
-//            $message->to($userArray['email'], $userArray['name'])->subject('Welcome To BikeFree.TV!')->bcc('jason@bikefree.tv');
-//        });
-//
-//
-//        Mail::send('emails.welcome', array('key' => 'value'), function($message)
-//        {
-//            $message->to('foo@example.com', 'John Smith')->subject('Welcome!');
-//        });
-        // @TODO If you want to send out notifications, do something here.
-        dd('The user was created, now lets send an email confirmation');
+        $user = $userWasCreated->getUser();
+
+        Mail::send('user::emails.confirmation', ['user' => $user], function($message) use ($user) {
+
+            $message->to($user->email, $user->name)
+                ->subject('Verify your email address');
+
+        });
     }
 }
