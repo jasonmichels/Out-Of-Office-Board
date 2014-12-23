@@ -25,6 +25,7 @@ class ManageController extends \BaseController
      */
     public function index()
     {
+        // get a list of all statuses for the company today
         return View::make('status::manage.index');
     }
 
@@ -45,6 +46,7 @@ class ManageController extends \BaseController
      */
     public function store()
     {
+        dd('Here is where we use commander to store and validate the status');
     }
 
     /**

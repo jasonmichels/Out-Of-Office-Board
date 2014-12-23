@@ -64,6 +64,7 @@
 <script src="{{ asset('components/pickadate/lib/compressed/picker.js') }}"></script>
 <script src="{{ asset('components/pickadate/lib/compressed/picker.date.js') }}"></script>
 <script src="{{ asset('components/pickadate/lib/compressed/legacy.js') }}"></script>
+<script src="{{ asset('assets/js/global.js') }}"></script>
 
 <script>
     $('#flash-overlay-modal').modal();
