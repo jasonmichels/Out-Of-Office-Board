@@ -52,6 +52,18 @@ App::error(function(Exception $exception, $code)
 });
 
 /**
+ * Catch validation when the account confirmation fails
+ */
+App::error(function(\OutOfOffice\User\Exceptions\InvalidAccountConfirmationException $exception, $code)
+{
+    Log::error('InvalidAccountConfirmationException was caught');
+    Log::error($exception);
+
+    \Laracasts\Flash\Flash::error($exception->getMessage());
+    return Redirect::route('user.register.failed');
+});
+
+/**
  * Catch validation when the login fails
  */
 App::error(function(\OutOfOffice\User\Exceptions\InvalidLoginException $exception, $code)

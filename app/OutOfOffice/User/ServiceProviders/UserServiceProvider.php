@@ -39,6 +39,7 @@ class UserServiceProvider extends ServiceProvider
     public function registerEventListeners()
     {
         Event::listen('OutOfOffice.User.*', 'OutOfOffice\User\Listeners\EmailConfirmation');
+        Event::listen('OutOfOffice.User.*', 'OutOfOffice\User\Listeners\AccountConfirmationNotifier');
     }
 
 }

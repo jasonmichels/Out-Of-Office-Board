@@ -9,6 +9,7 @@ Route::get('logout', array('uses' => 'OutOfOffice\User\Controllers\AccountContro
 Route::get('signup', array('uses' => 'OutOfOffice\User\Controllers\AccountController@signup', 'as' => 'user.account.signup'));
 Route::post('signup', array('uses' => 'OutOfOffice\User\Controllers\AccountController@store', 'as' => 'user.account.store'));
 
+Route::get('register/verify/fail', ['uses' => 'OutOfOffice\User\Controllers\AccountController@confirmFailed', 'as' => 'user.register.failed']);
 Route::get('register/verify/{confirmationCode}', ['uses' => 'OutOfOffice\User\Controllers\AccountController@confirm', 'as' => 'user.register.confirm']);
 
 Route::controller('password', 'OutOfOffice\User\Controllers\RemindersController');

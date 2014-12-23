@@ -92,12 +92,26 @@ class AccountController extends \BaseController
      */
     public function confirm($confirmationCode)
     {
-        $this->execute(
+        $user = $this->execute(
             ConfirmUserEmailCommand::class,
             ['confirmation_code' => $confirmationCode],
             ['OutOfOffice\User\Services\FetchUser']
         );
-        return 'This is a confirm user account';
+
+        Auth::login($user);
+
+        Flash::success('Thank you for verifying your email address. Your account is now active.');
+        return Redirect::route('status.manage.index');
+    }
+
+    /**
+     * Show an error page if email validation fails
+     *
+     * @return mixed
+     */
+    public function confirmFailed()
+    {
+        return View::make('user::account.confirmFailed');
     }
 
 }

@@ -1,5 +1,7 @@
 <?php namespace OutOfOffice\User\Handlers;
 
+use Laracasts\Validation\FormValidationException;
+use OutOfOffice\User\Exceptions\InvalidAccountConfirmationException;
 use OutOfOffice\User\Forms\ConfirmUserEmailForm;
 
 /**
@@ -30,10 +32,14 @@ class ConfirmUserEmailValidator
      * Validate the user submitted form
      *
      * @param ConfirmUserEmailCommand $command
-     * @throws \Laracasts\Validation\FormValidationException
+     * @throws InvalidAccountConfirmationException
      */
     public function validate(ConfirmUserEmailCommand $command)
     {
-        $this->form->validate($command->toArray());
+        try {
+            $this->form->validate($command->toArray());
+        } catch (FormValidationException $e) {
+            throw new InvalidAccountConfirmationException($e->getMessage());
+        }
     }
 }
