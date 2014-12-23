@@ -38,6 +38,15 @@ interface UserRepositoryInterface
     public function all();
 
     /**
+     * Find a user by column or fail
+     *
+     * @param $key
+     * @param $value
+     * @return mixed
+     */
+    public function findByFieldOrFail($key, $value);
+
+    /**
      * Create new user object
      *
      * @param array $userData

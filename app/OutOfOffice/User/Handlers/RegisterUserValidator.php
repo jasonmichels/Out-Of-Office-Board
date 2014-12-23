@@ -31,12 +31,10 @@ class RegisterUserValidator
     /**
      * Validate the user registration
      *
-     * @param RegisterUserForm $command
+     * @param RegisterUserCommand $command
      */
     public function validate(RegisterUserCommand $command)
     {
         $this->form->validate($command->toArray());
     }
-
-
-} 
+}

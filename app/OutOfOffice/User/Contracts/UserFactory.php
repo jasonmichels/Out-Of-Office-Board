@@ -15,10 +15,9 @@ interface UserFactory
     /**
      * Create a user new
      *
-     * @param $domain
      * @param $command
      * @return User
      * @throws \Exception
      */
-    public function createUser($domain, $command);
+    public function createUser($command);
 } 

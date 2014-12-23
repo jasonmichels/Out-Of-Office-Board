@@ -35,6 +35,11 @@ class RegisterUserCommand implements ArrayableInterface
     public $name;
 
     /**
+     * @var string $domain Domain stripped from the email
+     */
+    public $domain;
+
+    /**
      * @param $email
      * @param $password
      * @param $password_confirmation

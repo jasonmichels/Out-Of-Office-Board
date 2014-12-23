@@ -70,6 +70,18 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
+     * Find a user by column or fail
+     *
+     * @param $key
+     * @param $value
+     * @return mixed
+     */
+    public function findByFieldOrFail($key, $value)
+    {
+        return User::where($key, '=', $value)->firstOrFail();
+    }
+
+    /**
      * Create a new user
      *
      * @param $data

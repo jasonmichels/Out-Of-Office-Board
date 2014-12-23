@@ -27,7 +27,7 @@ class EmailConfirmation extends EventListener
         Mail::send('user::emails.confirmation', ['user' => $user], function($message) use ($user) {
 
             $message->to($user->email, $user->name)
-                ->subject('Verify your email address');
+                ->subject('Out Of Office - Verify your email address');
 
         });
     }

@@ -45,15 +45,14 @@ class UserFactory implements \OutOfOffice\User\Contracts\UserFactory
     }
 
     /**
-     * @param $domain
      * @param $command
      * @return User
      * @throws \Exception
      */
-    public function createUser($domain, $command)
+    public function createUser($command)
     {
         //check to see if domain owner exists in the database
-        $domainOwner = $this->userRepository->getDomainOwnerForDomain($domain);
+        $domainOwner = $this->userRepository->getDomainOwnerForDomain($command->domain);
 
         if ($domainOwner) {
             // domain exists, make sure account is paid in full
@@ -63,39 +62,37 @@ class UserFactory implements \OutOfOffice\User\Contracts\UserFactory
             // if paid in full (active) then create new account
             // they are not domain owner so create them as not domain owner
             // @TODO Send email confirmation from the event that is triggered
-            return $this->createDomainUser($domain, $command->toArray());
+            return $this->createDomainUser($command->toArray());
         }
             // if no domainOwner, they are first of their kind
             // Create the new user and make them confirm their account.
             // @TODO Also make them pay me my money
             // @TODO Send email confirmation from the event that is triggered
-        return $this->createDomainOwner($domain, $command->toArray());
+        return $this->createDomainOwner($command->toArray());
     }
 
     /**
      * Create a domain owner
      *
-     * @param string $domain
      * @param array $userInfo
      * @param bool $active
      * @return User
      */
-    protected function createDomainOwner($domain, array $userInfo, $active = false)
+    protected function createDomainOwner(array $userInfo, $active = false)
     {
-        return $this->create(array_merge($userInfo, ['domain' => $domain, 'domain_owner' => true, 'active' => $active]));
+        return $this->create(array_merge($userInfo, ['domain_owner' => true, 'active' => $active]));
     }
 
     /**
      * Create a user that is not a domain owner, but an "employee" for lack of better term
      *
-     * @param string $domain
      * @param array $userInfo
      * @param bool $active
      * @return User
      */
-    protected function createDomainUser($domain, array $userInfo, $active = false)
+    protected function createDomainUser(array $userInfo, $active = false)
     {
-        return $this->create(array_merge($userInfo, ['domain' => $domain, 'domain_owner' => false, 'active' => $active]));
+        return $this->create(array_merge($userInfo, ['domain_owner' => false, 'active' => $active]));
     }
 
     /**

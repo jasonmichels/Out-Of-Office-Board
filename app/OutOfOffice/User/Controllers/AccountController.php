@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 use Laracasts\Flash\Flash;
 use OutOfOffice\User\Handlers\RegisterUserCommand;
 use OutOfOffice\User\Handlers\LoginUserCommand;
+use OutOfOffice\User\Handlers\ConfirmUserEmailCommand;
 
 /**
  * Class AccountController
@@ -74,14 +75,29 @@ class AccountController extends \BaseController
      */
     public function store()
     {
-        $user = $this->execute(RegisterUserCommand::class);
+        $this->execute(
+            RegisterUserCommand::class,
+            null,
+            ['OutOfOffice\User\Services\FetchDomain']
+        );
+
         Flash::success('Be on the look out for an email confirmation. You will be able to login once you confirm your email address.');
         return Redirect::route('user.account.login');
     }
 
-    public function confirm()
+    /**
+     * Confirm a users email/account
+     *
+     * @param $confirmationCode
+     */
+    public function confirm($confirmationCode)
     {
-
+        $this->execute(
+            ConfirmUserEmailCommand::class,
+            ['confirmation_code' => $confirmationCode],
+            ['OutOfOffice\User\Services\FetchUser']
+        );
+        return 'This is a confirm user account';
     }
 
 }
