@@ -32,6 +32,16 @@ class User extends \Eloquent implements UserInterface, RemindableInterface
 	protected $hidden = array('password');
 
     /**
+     * A user has many statuses
+     *
+     * @return mixed
+     */
+    public function statuses()
+    {
+        return $this->hasMany('OutOfOffice\Status\Models\Status');
+    }
+
+    /**
      * Return if user is admin
      *
      * @return bool
