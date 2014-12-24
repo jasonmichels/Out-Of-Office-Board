@@ -6,6 +6,7 @@
  */
 
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Input;
 
 /**
  * Manager statuses
@@ -46,7 +47,7 @@ class ManageController extends \BaseController
      */
     public function store()
     {
-        dd('Here is where we use commander to store and validate the status');
+        dd(Input::all());
     }
 
     /**

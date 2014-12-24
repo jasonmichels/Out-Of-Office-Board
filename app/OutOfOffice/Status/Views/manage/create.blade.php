@@ -16,7 +16,7 @@
         <div class="form-group {{ ($errors->first('type')) ? 'has-error' : '' }}">
             {{ Form::label('type', 'Status Type', array('class' => 'control-label')) }}
             {{ ($errors->first('type')) ? '<p class="text-danger">' . $errors->first('type') . '</p>' : '' }}
-            {{ Form::email('type', null, array('class' => 'form-control', 'placeholder' => 'Enter Status Type')) }}
+            {{ Form::text('type', null, array('class' => 'form-control', 'placeholder' => 'Enter Status Type')) }}
         </div>
 
         <div class="form-group {{ ($errors->first('start_date')) ? 'has-error' : '' }}">

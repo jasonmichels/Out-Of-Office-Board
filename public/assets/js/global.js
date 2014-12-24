@@ -19,19 +19,19 @@ var OUTOFOFFICE = OUTOFOFFICE || {};
 
 
 OUTOFOFFICE.Status = {
-    init: function() {
+    init: function () {
         var self = this;
         self.bind();
     },
 
-    bind: function() {
+    bind: function () {
 
         $('.datepicker_status').pickadate({
             format: 'yyyy-mm-dd 00:00:00'
         });
 
         $('.timepicker_status').pickatime({
-            //format: 'yyyy-mm-dd 00:00:00'
+
         });
 
     }
