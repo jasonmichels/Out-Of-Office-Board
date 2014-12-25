@@ -27,11 +27,13 @@ OUTOFOFFICE.Status = {
     bind: function () {
 
         $('.datepicker_status').pickadate({
-            format: 'yyyy-mm-dd 00:00:00'
+            format: 'yyyy-mm-dd'
         });
 
         $('.timepicker_status').pickatime({
-
+            formatSubmit: 'HH:i',
+            hiddenName: true,
+            interval: 15
         });
 
     }

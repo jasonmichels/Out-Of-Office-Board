@@ -17,6 +17,21 @@ class Status extends \Eloquent
 
     protected $fillable = array('user_id', 'type', 'start_date', 'end_date');
 
+    const WFH = 'wfh';
+    const PTO = 'pto';
+    const ARRIVE_LATE = 'arrive_late';
+    const LEAVE_EARLY = 'leave_early';
+
+    /**
+     * Get all possible statuses
+     *
+     * @return array
+     */
+    public static function getAllStatuses()
+    {
+        return [self::WFH => 'WFH', self::PTO => 'PTO', self::ARRIVE_LATE => 'Arrive Late', self::LEAVE_EARLY => 'Leave Early'];
+    }
+
 	/**
 	 * The database table used by the model.
 	 *

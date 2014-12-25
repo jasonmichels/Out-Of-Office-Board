@@ -7,6 +7,8 @@
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
+use OutOfOffice\Status\Models\Status;
+use OutOfOffice\Status\Handlers\CreateStatusCommand;
 
 /**
  * Manager statuses
@@ -37,7 +39,8 @@ class ManageController extends \BaseController
      */
     public function create()
     {
-        return View::make('status::manage.create');
+        $statuses = Status::getAllStatuses();
+        return View::make('status::manage.create')->with('statuses', $statuses);
     }
 
     /**
@@ -47,7 +50,12 @@ class ManageController extends \BaseController
      */
     public function store()
     {
-        dd(Input::all());
+        $this->execute(
+            CreateStatusCommand::class,
+            null,
+            ['OutOfOffice\Status\Services\CreateStatusDateGenerator']
+        );
+        var_dump('This is the end of the store method');
     }
 
     /**
