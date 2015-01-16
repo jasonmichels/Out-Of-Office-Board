@@ -1,0 +1,4 @@
+---
+- name: npm global install
+  npm: global=yes name={{item}}
+  with_items: npm_packages

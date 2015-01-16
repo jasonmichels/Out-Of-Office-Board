@@ -24,9 +24,11 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(array(
-    'local' => array('homestead'),
-));
+$env = $app->detectEnvironment(function()
+{
+    return getenv('APPLICATION_ENV');
+});
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +40,6 @@ $env = $app->detectEnvironment(array(
 | may do so within the paths.php file and they will be bound here.
 |
 */
-
 $app->bindInstallPaths(require __DIR__.'/paths.php');
 
 /*
@@ -67,5 +68,4 @@ require $framework.'/Illuminate/Foundation/start.php';
 | from the actual running of the application and sending responses.
 |
 */
-
 return $app;

@@ -149,7 +149,7 @@
                defaultValue="out_of_office" promptChar="?">Database Name
         </input>
         <input propertyName="config.config_username"
-               defaultValue="homestead" promptChar="?">Database Username
+               defaultValue="out_of_office" promptChar="?">Database Username
         </input>
         <input propertyName="config.config_password"
                defaultValue="secret" promptChar="?">Database Password

@@ -1,0 +1,11 @@
+---
+- name: install mysql
+  apt: pkg=mysql-server state=latest update_cache=yes
+  notify:
+  - restart mysql
+
+- mysql_db: name={{ dbname }} state=present
+  notify:
+    - restart mysql
+
+- mysql_user: name={{ dbuser }} password={{ dbpasswd }} priv=*.*:ALL state=present
